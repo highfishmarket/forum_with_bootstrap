@@ -5,10 +5,13 @@
         <div class="row my-3">
             <div class="col-12">
                 <label for="">Category Title</label>
-                <input type="text" class="form-control">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-                    <button class="btn btn-primary" type="button">Create</button>
-                </div>
+                <form method="POST" action="/category/store">
+                    @csrf
+                    <input type="text" class="form-control" name="title">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                        <button class="btn btn-primary" type="submit">Create</button>
+                    </div>
+                </form>
             </div>
         </div>
         <hr>
