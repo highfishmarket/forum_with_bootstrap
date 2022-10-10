@@ -10,6 +10,7 @@
             </div>
         </div>
         <hr>
+{{--        TODO 여기도 다 컨트롤러에서 할 수 있도록 변경해 둘것--}}
         @php
             $categories = App\Models\Category::orderby('title', 'asc')->get();
         @endphp
@@ -26,7 +27,7 @@
                             <ul class="list-group">
                                 @foreach($posts as $post)
                                     <li class="list-group-item list-group-item-action"><a
-                                            href="{{url('/')}}/1/view" style="text-decoration: none" class="text=dark">{{$post->title}}</a>
+                                            href="{{url('/')}}/{{$post->id}}/view" style="text-decoration: none" class="text=dark">{{$post->title}}</a>
                                         <span class="badge bg-info text-dark">4</span>
                                         <span class="badge bg-info text-dark"><i class="fa-solid fa-heart"></i>3</span>
                                         <br>

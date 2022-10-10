@@ -4,15 +4,17 @@
     <div class="container">
         <div class="row">
             <div class="col-12 border border-1 mt-5">
-                <h3>Lorem ipsum dolor sit amet.</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam assumenda at aut consequuntur
-                    culpa cumque delectus, dicta dolorem dolores, dolorum ducimus, ea eos eveniet facere id magni minima
-                    nemo neque nobis nulla numquam odio perferendis placeat quis repellat repudiandae sed similique sit
-                    suscipit tempore temporibus vel voluptate. Blanditiis, consequuntur!</p>
+                <h3 class="bg-light border border-1 py-3 px-3 mt-3">{{$post->title}}</h3>
+{{--                TODO 씐기해 확인해 봐야 할것--}}
+                {!!$post->content!!}
                 <hr>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                    <button class="btn btn-secondary me-md-2" type="button">Edit</button>
-                    <button class="btn btn-danger" type="button">Delete</button>
+                    <a href="{{url('/')}}/{{$post->id}}/edit" class="btn btn-secondary me-md-2" type="button">Edit</a>
+                    <form method="POST" action="/{{$post->id}}/delete">
+                        @method('DELETE')
+                        @csrf
+                        <button class="btn btn-danger me-md-2" type="submit">Delete</button>
+                    </form>
                 </div>
             </div>
         </div>

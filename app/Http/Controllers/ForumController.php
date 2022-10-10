@@ -13,11 +13,17 @@ class ForumController extends Controller
         return view('forum.index');
     }
 
-    public function view()
+    public function view($id)
     {
-        return view('forum.view');
+        $post = Post::find($id);
+        return view('forum.view')->with('post', $post);
     }
-
+    public function edit($id)
+    {
+        $categories = Category::orderby('title', 'asc')->get();
+        $post = Post::find($id);
+        return view('forum.edit')->with('post', $post)->with('categories', $categories);
+    }
     public function create()
     {
         $categories = Category::orderby('title', 'asc')->get();
@@ -39,11 +45,36 @@ class ForumController extends Controller
         );
         return response()->json($data);
     }
+
+    public function update(Request $request)
+    {
+        $post = Post::find($request->post_id);
+        $post->title = $request->title;
+        $post->category_id = $request->category_id;
+        $post->content = $request->content;
+        $post->save();
+
+        $result = $request->all();
+
+        $data = array(
+            'result' => $result
+        );
+        return response()->json($data);
+    }
+
     public function category($id)
     {
         $category = Category::find($id);
         $category_title = $category->title;
         $posts = Post::where('category_id', $id)->orderby('created_at', 'desc')->get();
         return view('forum.category')->with('posts', $posts)->with('category_title', $category_title);
+    }
+
+    public function delete($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+
+        return redirect('/');
     }
 }
