@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index()
     {
         if (isset(auth()->user()->id)) {
-//           TODO middleware && construct로 바로 해결 할수 있으니 확인이 필요
+//           TODO middleware && constructor로 바로 해결 할수 있으니 확인이 필요
             $categories = Category::orderby('title', 'asc')->get();
 
             return view('category.index')->with('categories', $categories);
