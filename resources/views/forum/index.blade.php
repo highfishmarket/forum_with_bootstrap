@@ -30,10 +30,17 @@
                                 @foreach($posts as $post)
                                     <li class="list-group-item list-group-item-action"><a
                                             href="{{url('/')}}/{{$post->id}}/view" style="text-decoration: none" class="text=dark">{{$post->title}}</a>
-                                        <span class="badge bg-info text-dark">4</span>
+                                        <span class="badge bg-info text-dark">
+                                            {{App\Models\Reply::where('post_id', $post->id)->count()}}
+                                        </span>
                                         <span class="badge bg-info text-dark"><i class="fa-solid fa-heart"></i>3</span>
                                         <br>
-                                        <small>{{$post->created_at}} | by SB Hero</small>
+                                        <small>{{$post->created_at}} | by
+                                        @php
+                                        $user = App\Models\User::find($post->user_id);
+                                        @endphp
+                                            {{$user->name}}
+                                        </small>
                                     </li>
                                 @endforeach
                             </ul>

@@ -45,6 +45,7 @@
             </div>
         </div>
         <hr>
+        @auth
         <form method="POST" action="/reply/store">
             @csrf
             <div class="row my-3">
@@ -61,5 +62,6 @@
                 </div>
             </div>
         </form>
+        @endauth
     </div>
 @endsection

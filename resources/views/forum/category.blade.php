@@ -27,6 +27,9 @@
                         @endforeach
                     </ul>
                 </div>
+                <div class="col-12">
+                    {{$posts->links()}}
+                </div>
             </div>
             <hr>
         @endif
