@@ -33,7 +33,7 @@
                                         <span class="badge bg-info text-dark">
                                             {{App\Models\Reply::where('post_id', $post->id)->count()}}
                                         </span>
-                                        <span class="badge bg-info text-dark"><i class="fa-solid fa-heart"></i>3</span>
+                                        <span class="badge bg-info text-dark"><i class="fa-solid fa-heart">{{App\Models\Heart::where('post_id', $post->id)->count()}}</i></span>
                                         <br>
                                         <small>{{$post->created_at}} | by
                                         @php

@@ -25,9 +25,15 @@
         </div>
         <div class="row my-3">
             <div class="col-12">
-                <div class="d-grid gap-2 col-3 mx-auto">
-                    <button class="btn btn-outline-danger fs-4"><i class="fa-solid fa-heart fs-4"></i>3</button>
-                </div>
+                <form method="POST" action="/heart">
+                    @csrf
+                    <div class="d-grid gap-2 col-3 mx-auto">
+                        <button class="btn btn-outline-danger fs-4" type="submit"><i class="fa-solid
+                         fa-heart fs-4"></i>{{App\Models\Heart::where('post_id', $post->id)->count()}}
+                        </button>
+                        <input type="hidden" name="post_id" value="{{$post->id}}">
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row my-3">
@@ -38,7 +44,10 @@
                     @endphp
                     @if(count($replies) >0)
                         @foreach($replies as $reply)
-                            <li class="list-group-item list-group-item-action">{{$reply->reply}}<br><small>{{$reply->created_at}} | by @php $user = App\Models\User::find($reply->user_id);@endphp {{$user->name}}</small></li>
+                            <li class="list-group-item list-group-item-action">{{$reply->reply}}
+                                <br><small>{{$reply->created_at}} |
+                                    by @php $user = App\Models\User::find($reply->user_id);@endphp {{$user->name}}</small>
+                            </li>
                         @endforeach
                     @endif
                 </ul>
@@ -46,22 +55,22 @@
         </div>
         <hr>
         @auth
-        <form method="POST" action="/reply/store">
-            @csrf
-            <div class="row my-3">
-                <div class="col-12">
-                    <input type="text" class="form-control" name="reply">
-                    <input type="hidden" name="post_id" value="{{$post->id}}">
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class="col12">
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary" type="submit">Submit</button>
+            <form method="POST" action="/reply/store">
+                @csrf
+                <div class="row my-3">
+                    <div class="col-12">
+                        <input type="text" class="form-control" name="reply">
+                        <input type="hidden" name="post_id" value="{{$post->id}}">
                     </div>
                 </div>
-            </div>
-        </form>
+                <div class="row my-3">
+                    <div class="col12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         @endauth
     </div>
 @endsection
