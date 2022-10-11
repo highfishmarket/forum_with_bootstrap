@@ -7,6 +7,9 @@
                 <h3 class="bg-light border border-1 py-3 px-3 mt-3">{{$post->title}}</h3>
 {{--                TODO 씐기해 확인해 봐야 할것--}}
                 {!!$post->content!!}
+{{--                작성자만 나오도록 --}}
+                @auth
+                @if($post->user_id == auth()->user()->id)
                 <hr>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
                     <a href="{{url('/')}}/{{$post->id}}/edit" class="btn btn-secondary me-md-2" type="button">Edit</a>
@@ -16,6 +19,8 @@
                         <button class="btn btn-danger me-md-2" type="submit">Delete</button>
                     </form>
                 </div>
+                @endif
+                @endauth
             </div>
         </div>
         <div class="row my-3">

@@ -2,6 +2,7 @@
 
 @section('contents')
     <div class="container">
+        @auth
         <div class="row mt-3">
             <div class="col-12">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -10,6 +11,7 @@
             </div>
         </div>
         <hr>
+        @endauth
 {{--        TODO 여기도 다 컨트롤러에서 할 수 있도록 변경해 둘것--}}
         @php
             $categories = App\Models\Category::orderby('title', 'asc')->get();

@@ -7,9 +7,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                @auth
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{url('/')}}/category">Category</a>
                 </li>
+                @endauth
                 @guest
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{url('/')}}/login">Login</a>
@@ -17,6 +19,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{url('/')}}/register">Register</a>
                 </li>
+{{--                    TODO 여기 guest & auth 등 확인 해 볼 것--}}
                 @endguest
                 @auth
                     <form method="POST" action="{{ route('logout') }}">

@@ -22,22 +22,33 @@ class ForumController extends Controller
     {
         $categories = Category::orderby('title', 'asc')->get();
         $post = Post::find($id);
-        return view('forum.edit')->with('post', $post)->with('categories', $categories);
+//        아이디 비교 후 아닐때 튕겨내게
+        if(auth()->user()->id == $post->user_id){
+            return view('forum.edit')->with('post', $post)->with('categories', $categories);
+        } else {
+            return redirect('/');
+        }
+
     }
     public function create()
     {
-        $categories = Category::orderby('title', 'asc')->get();
-        return view('forum.create')->with('categories', $categories);
+        if(isset(auth()->user()->id)){
+            $categories = Category::orderby('title', 'asc')->get();
+            return view('forum.create')->with('categories', $categories);
+        } else {
+            return redirect('/');
+        }
     }
 
     public function store(Request $request)
     {
-        $post = new Post;
-        $post->title = $request->title;
-        $post->category_id = $request->category_id;
-        $post->content = $request->content;
-        $post->save();
-
+        if(isset(auth()->user()->id)) {
+            $post = new Post;
+            $post->title = $request->title;
+            $post->category_id = $request->category_id;
+            $post->content = $request->content;
+            $post->save();
+        }
         $result = $request->all();
 
         $data = array(
@@ -48,12 +59,13 @@ class ForumController extends Controller
 
     public function update(Request $request)
     {
-        $post = Post::find($request->post_id);
-        $post->title = $request->title;
-        $post->category_id = $request->category_id;
-        $post->content = $request->content;
-        $post->save();
-
+        if(isset(auth()->user()->id)) {
+            $post = Post::find($request->post_id);
+            $post->title = $request->title;
+            $post->category_id = $request->category_id;
+            $post->content = $request->content;
+            $post->save();
+        }
         $result = $request->all();
 
         $data = array(
@@ -73,8 +85,11 @@ class ForumController extends Controller
     public function delete($id)
     {
         $post = Post::find($id);
-        $post->delete();
-
+        if(auth()->user()->id == $post->user_id) {
+            $post = Post::find($id);
+            $post->delete();
+        }
         return redirect('/');
+
     }
 }
