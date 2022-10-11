@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Reply;
 
 class ForumController extends Controller
 {
@@ -90,6 +91,15 @@ class ForumController extends Controller
             $post->delete();
         }
         return redirect('/');
+    }
+    public function replyStore(Request $request)
+    {
+        $reply = new Reply;
+        $reply -> user_id = auth()-> user()-> id;
+        $reply -> post_id = $request-> post_id;
+        $reply -> reply = $request-> reply;
+        $reply->save();
 
+        return redirect('/'.$request->post_id.'/view');
     }
 }
